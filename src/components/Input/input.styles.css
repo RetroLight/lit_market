@@ -1,0 +1,9 @@
+.inputContainer {
+    border: 1px solid #000;
+    display: inline-flex;
+    padding: 2px;
+}
+.inputContainer input {
+    padding: 10px 4px;
+    font-size: 18px;
+}

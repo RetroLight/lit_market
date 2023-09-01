@@ -1,38 +1,62 @@
-.App {
-  text-align: center;
+* {
+    border: none;
+    text-decoration: none;
+    color: inherit;
+    outline: none;
+    font-size: 16px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.container {
+    width: 60%;
+    margin: 40px auto;
+    border: 2px solid #000;
+    padding: 40px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.inputDataContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+.inputDataContainer .inputsControl {
+    display: flex;
+    align-items: center;
+    gap: 4px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+
+.jsonContainer {
+    margin-top: 40px;
+}
+.jsonContainer textarea {
+    resize: none;
+}
+.jsonContainer .btnContainer {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 20px;
+}
+.jsonContainer .btnContainer > * {
+    width: 20%;
+}
+.jsonContainer .errorMessage {
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+    color: red;
 }
 
-.App-link {
-  color: #61dafb;
+.newTableRowContainer {
+    margin-top: 20px;
+    border: 1px dashed #000;
+    padding: 10px;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.newTableRowContainer form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
 }
