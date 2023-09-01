@@ -61,12 +61,10 @@ export const inputDataReducer = (state, action) => {
                 dataRowArr: [...state.dataRowArr, newRow]
             }
         case ROW_EDIT:
-
-            const editedRow = structuredClone(state.dataRowArr[action.payload.index])
-            editedRow[action.payload.key] = action.payload.text
             return {
                 ...state,
-                dataRowArr: state.dataRowArr.splice(action.payload.index, 1, editedRow)
+                dataRowArr: state.dataRowArr.map(el => el.id === action.payload.id
+                ? {...el, [action.payload.key]:action.payload.text} : el)
             }
 
         case DELETE_INPUT_ROW:

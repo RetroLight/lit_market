@@ -34,9 +34,9 @@ export const addNewRowAC = ({name, value}) => ({
     payload: {name, value}
 })
 
-export const rowEditAC = (index, key, text) => ({
+export const rowEditAC = (id, key, text) => ({
     type: ROW_EDIT,
-    payload: {index, key, text}
+    payload: {id, key, text}
 })
 
 export const deleteInputRowAC = (id) => ({

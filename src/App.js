@@ -42,8 +42,8 @@ function App() {
         setNewRowValue(initialInputData)
     }
 
-    const inputEditHandler = (index, key, event) => {
-        dispatchInputState(rowEditAC(index, key, event.target.value))
+    const inputEditHandler = (id, key, event) => {
+        dispatchInputState(rowEditAC(id, key, event.target.value))
     }
     const onTextareaChange = (event) => {
         dispatchInputState(onTextareaChangeAC(event.target.value))
@@ -78,10 +78,10 @@ function App() {
                                 inputState.dataRowArr.map((el, index) => {
                                     return (
                                         <DataRowItem key={el.id} id={el.id}>
-                                            <Input onTextChange={(e) => inputEditHandler(index, 'name', e)}
+                                            <Input onTextChange={(e) => inputEditHandler(el.id, 'name', e)}
                                                    value={el.name}
                                             />
-                                            <Input onTextChange={(e) => inputEditHandler(index, 'value', e)}
+                                            <Input onTextChange={(e) => inputEditHandler(el.id, 'value', e)}
                                                    value={el.value}/>
                                             <div className="inputsControl">
                                                 <div>
