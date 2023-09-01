@@ -1,3 +1,11 @@
 .dataRowItem {
     display: flex;
+    width: 100%;
+    gap: 4px;
+}
+
+.dataRowItem .inputsControl {
+    display: flex;
+    align-items: center;
+    gap: 4px;
 }

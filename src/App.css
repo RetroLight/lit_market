@@ -1,6 +1,7 @@
 * {
     border: none;
     text-decoration: none;
+    box-sizing: border-box;
     color: inherit;
     outline: none;
     font-size: 16px;
@@ -13,47 +14,50 @@
     padding: 40px;
 }
 
-.inputDataContainer {
+.inputDataSection {
     display: flex;
     flex-direction: column;
     gap: 10px;
     margin-top: 20px;
 }
-.inputDataContainer .inputsControl {
+.inputDataSection .sectionHeading {
     display: flex;
-    align-items: center;
-    gap: 4px;
+    width: 100%;
+}
+.inputDataSection .sectionHeading > h2 {
+    font-size: 20px;
+    width: 45%;
+    text-align: center;
 }
 
-
-.jsonContainer {
+.jsonSection {
     margin-top: 40px;
 }
-.jsonContainer textarea {
+.jsonSection textarea {
     resize: none;
 }
-.jsonContainer .btnContainer {
+.jsonSection .btnContainer {
     display: flex;
     justify-content: space-around;
     align-items: center;
     margin-top: 20px;
 }
-.jsonContainer .btnContainer > * {
+.jsonSection .btnContainer > * {
     width: 20%;
 }
-.jsonContainer .errorMessage {
+.jsonSection .errorMessage {
     display: block;
     text-align: center;
     margin-top: 10px;
     color: red;
 }
 
-.newTableRowContainer {
+.newTableRowSection {
     margin-top: 20px;
     border: 1px dashed #000;
     padding: 10px;
 }
-.newTableRowContainer form {
+.newTableRowSection form {
     display: flex;
     flex-direction: column;
     align-items: center;

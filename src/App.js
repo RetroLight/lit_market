@@ -1,5 +1,5 @@
 import './App.css';
-import React, {useState, useReducer} from "react";
+import React, {useState, useReducer, useRef} from "react";
 
 import {InputDataContext, inputDataReducer} from "./state/inputData";
 import {INITIAL_STATE} from "./state/inputData/inputDataReducer";
@@ -19,12 +19,14 @@ import DataRowItem from "./components/DataRowItem/DataRowItem.component";
 
 
 function App() {
-    const newRowInputs = {
+    const initialInputData = {
         'name':'',
         'value': ''
     }
     const [inputState, dispatchInputState] = useReducer(inputDataReducer, INITIAL_STATE)
-    const [newRowValue, setNewRowValue] = useState(newRowInputs)
+    const [newRowValue, setNewRowValue] = useState(initialInputData)
+
+    const dataRowLength = inputState.dataRowArr.length;
 
     const handleNewInputChange = (e) => {
         const { name, value } = e.target;
@@ -37,7 +39,7 @@ function App() {
     const createNewRow = (event, newRowObj) => {
         event.preventDefault()
         dispatchInputState(addNewRowAC(newRowObj))
-        setNewRowValue(newRowInputs)
+        setNewRowValue(initialInputData)
     }
 
     // const onInputChange = (event) => {
@@ -49,7 +51,6 @@ function App() {
     }
     const onLoadJsonData = (json) => {
         dispatchInputState(loadJsonAC(json))
-        console.log(inputState.dataRowArr)
     }
     const onSaveInputData = () => {
         dispatchInputState(saveJsonAC())
@@ -68,9 +69,13 @@ function App() {
         <InputDataContext.Provider value={{inputState, dispatchInputState}}>
             <div className="App">
                 <div className="container">
-                    <section className='inputDataContainer'>
+                    <section className='inputDataSection'>
+                        {dataRowLength ? <div className='sectionHeading'>
+                            <h2>Name</h2>
+                            <h2>Value</h2>
+                        </div> : null}
                         {
-                            inputState.dataRowArr.length > 0 ?
+                            dataRowLength ?
                                 inputState.dataRowArr.map((el, index) => {
                                     return (
                                         <DataRowItem key={el.id} id={el.id}>
@@ -93,7 +98,8 @@ function App() {
                         }
                     </section>
 
-                    <section className="jsonContainer">
+                    <section className="jsonSection">
+                        <h2>TextArea</h2>
                         <Textarea
                             onTextareaChange={onTextareaChange}
                             text={inputState.textFieldString}
@@ -106,7 +112,7 @@ function App() {
                         {inputState.error ? <span className='errorMessage'>Incorrect JSON: {inputState.error}</span> : null}
                     </section>
 
-                    <section className='newTableRowContainer'>
+                    <section className='newTableRowSection'>
                         <form onSubmit={e => createNewRow(e, newRowValue)}>
                             <Input
                                 onTextChange={handleNewInputChange}
