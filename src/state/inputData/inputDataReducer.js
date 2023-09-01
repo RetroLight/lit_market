@@ -4,7 +4,7 @@ import {
     DELETE_INPUT_ROW,
     LOAD_JSON_DATA,
     ON_INPUT_CHANGE,
-    ON_TEXTAREA_CHANGE, ROW_DOWN, ROW_UP,
+    ON_TEXTAREA_CHANGE, ROW_DOWN, ROW_EDIT, ROW_UP,
     SAVE_JSON_DATA
 } from "./actionTypes";
 
@@ -29,7 +29,7 @@ export const inputDataReducer = (state, action) => {
             }
         case LOAD_JSON_DATA:
             try {
-                var dataArr = JSON.parse(state.textFieldString)
+                let dataArr = JSON.parse(state.textFieldString)
                 dataArr.map(el => {
                     el.id = Math.floor(Math.random() * 1000)
                 })
@@ -47,7 +47,6 @@ export const inputDataReducer = (state, action) => {
         case SAVE_JSON_DATA:
             var dataRowArrCopy = structuredClone(state.dataRowArr)
             dataRowArrCopy.map(el => delete el.id)
-
             return {
                 ...state,
                 textFieldJSON: dataRowArrCopy,
@@ -55,12 +54,21 @@ export const inputDataReducer = (state, action) => {
                 error: ''
             }
         case ADD_NEW_ROW:
-            var newRow = action.payload;
+            const newRow = action.payload;
             newRow.id = Math.floor(Math.random() * 1000)
             return {
                 ...state,
                 dataRowArr: [...state.dataRowArr, newRow]
             }
+        case ROW_EDIT:
+
+            const editedRow = structuredClone(state.dataRowArr[action.payload.index])
+            editedRow[action.payload.key] = action.payload.text
+            return {
+                ...state,
+                dataRowArr: state.dataRowArr.splice(action.payload.index, 1, editedRow)
+            }
+
         case DELETE_INPUT_ROW:
             return {
                 ...state,
@@ -85,5 +93,6 @@ export const inputDataReducer = (state, action) => {
                 }
             }
             return state
+        default: return state
     }
 }

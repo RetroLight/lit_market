@@ -1,5 +1,5 @@
 import './App.css';
-import React, {useState, useReducer, useRef} from "react";
+import React, {useState, useReducer} from "react";
 
 import {InputDataContext, inputDataReducer} from "./state/inputData";
 import {INITIAL_STATE} from "./state/inputData/inputDataReducer";
@@ -8,7 +8,7 @@ import {
     clearJsonAC, deleteInputRowAC,
     loadJsonAC,
     onInputChangeAC,
-    onTextareaChangeAC, rowDownAC, rowUpAC,
+    onTextareaChangeAC, rowDownAC, rowEditAC, rowUpAC,
     saveJsonAC
 } from "./state/inputData/inputDataActions";
 
@@ -20,7 +20,7 @@ import DataRowItem from "./components/DataRowItem/DataRowItem.component";
 
 function App() {
     const initialInputData = {
-        'name':'',
+        'name': '',
         'value': ''
     }
     const [inputState, dispatchInputState] = useReducer(inputDataReducer, INITIAL_STATE)
@@ -29,7 +29,7 @@ function App() {
     const dataRowLength = inputState.dataRowArr.length;
 
     const handleNewInputChange = (e) => {
-        const { name, value } = e.target;
+        const {name, value} = e.target;
         setNewRowValue({
             ...newRowValue,
             [name]: value,
@@ -42,10 +42,9 @@ function App() {
         setNewRowValue(initialInputData)
     }
 
-    // const onInputChange = (event) => {
-    //     console.log(event)
-    // }
-
+    const inputEditHandler = (index, key, event) => {
+        dispatchInputState(rowEditAC(index, key, event.target.value))
+    }
     const onTextareaChange = (event) => {
         dispatchInputState(onTextareaChangeAC(event.target.value))
     }
@@ -79,12 +78,11 @@ function App() {
                                 inputState.dataRowArr.map((el, index) => {
                                     return (
                                         <DataRowItem key={el.id} id={el.id}>
-                                            <Input value={el.name}>
-                                                <Button title='edit'/>
-                                            </Input>
-                                            <Input value={el.value}>
-                                                <Button title='edit'/>
-                                            </Input>
+                                            <Input onTextChange={(e) => inputEditHandler(index, 'name', e)}
+                                                   value={el.name}
+                                            />
+                                            <Input onTextChange={(e) => inputEditHandler(index, 'value', e)}
+                                                   value={el.value}/>
                                             <div className="inputsControl">
                                                 <div>
                                                     <Button clickHandler={() => moveUpHandler(index)} title='Up'/>
@@ -109,7 +107,8 @@ function App() {
                             <Button clickHandler={() => onLoadJsonData(inputState.textFieldJSON)} title='Load'/>
                             <Button clickHandler={() => dispatchInputState(clearJsonAC())} title='Clear'/>
                         </div>
-                        {inputState.error ? <span className='errorMessage'>Incorrect JSON: {inputState.error}</span> : null}
+                        {inputState.error ?
+                            <span className='errorMessage'>Incorrect JSON: {inputState.error}</span> : null}
                     </section>
 
                     <section className='newTableRowSection'>
